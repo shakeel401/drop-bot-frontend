@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dave Does Water | DropBot</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="icon" type="image/png" href="chatbot-icon.png" />
+</head>
+<body>
+  <div class="container">
+    <!-- HEADER -->
+   <header id="main-header">
+    <div class="header-content">
+        <h1>Welcome to <span class="blue-text">DaveDoesWater.com!</span></h1>
+        <img src="dropbot-small.png" alt="DropBot Logo" class="logo-large" />
+    </div>
+    </header>
+
+
+
+    <!-- INTRO TEXT -->
+    <section id="intro" class="intro">
+      <p>Water is a solvent, as it moves through the earth it dissolves the minerals it comes in contact with. This is why the water in your community can be very different from the water 10 miles away.</p>
+      <p>Dave Bauer has 15 years experience in the Water conditioning industry. This website is free and designed to help you understand water and the various solutions available to you.</p>
+      <p>All Pro Water is the official St Louis area distributor for Hague Water solutions. We offer 10 years parts and labor warranty and Hague Water comes with its own 25 year manufacturers warranty! Hague Water is proud to be Made in the USA!</p>
+      <p>Call us when you are ready for us to conduct our free in-home water evaluation and solution!</p>
+    </section>
+
+    <!-- CONTACT INFO -->
+    <section id="contact-info" class="contact-info">
+      <p><strong>Dave Bauer</strong><br/>314–394–1500<br/><a href="mailto:Dave@ApwStl.com">Dave@ApwStl.com</a></p>
+    </section>
+
+    <!-- SUGGESTED QUESTIONS -->
+    <section id="suggested" class="suggested-questions">
+      <button>City Water</button>
+      <button>Spring Water</button>
+      <button>Chlorine</button>
+      <button>Well Water</button>
+      <button>Purified Water</button>
+      <button>Calcium</button>
+      <button>Hard Water</button>
+      <button>Distilled Water</button>
+      <button>Sulfur</button>
+      <button>Soft Water</button>
+      <button>Alkaline Water</button>
+      <button>Bacteria</button>
+      <button>Corrosion</button>
+      <button>UV Treatment</button>
+      <button>Pesticides</button>
+      <button>Limescale</button>
+      <button>Ion Exchange</button>
+      <button>Heavy Metals</button>
+      <button>Soap Scum</button>
+      <button>Reverse Osmosis</button>
+      <button>E. Coli</button>
+    </section>
+
+    <!-- CHAT WINDOW -->
+    <section class="chat-window" id="chat-window" style="display: none;"></section>
+
+    <!-- CHAT INPUT -->
+    <section class="chat-input">
+      <div class="chat-bar">
+        <img src="dropbot-small.png" class="chat-icon" alt="DropBot icon"/>
+        <input type="text" id="user-input" placeholder="Ask our AI DropBot any question!" />
+        <button id="ask-button">Ask</button>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="footer">
+      <div class="logos">
+        <img src="allpro-logo.jpg" alt="All Pro Water Logo" />
+        <img src="hague-logo.jpg" alt="Hague Water Logo" />
+      </div>
+      <p>Dave Bauer – 314–394–1500 – <a href="mailto:Dave@ApwStl.com">Dave@ApwStl.com</a></p>
+    </footer>
+  </div>
+
+  <!-- SCRIPT -->
+  <script>
+    const input = document.getElementById("user-input");
+    const askBtn = document.getElementById("ask-button");
+    const chatWindow = document.getElementById("chat-window");
+    const buttons = document.querySelectorAll(".suggested-questions button");
+
+    let hasInteracted = false;
+    let thread_id = localStorage.getItem("dropbot_thread_id") || "";
+
+    const hideIntro = () => {
+      ["main-header", "intro", "contact-info", "suggested", "footer"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = "none";
+      });
+      chatWindow.style.display = "flex";
+    };
+
+    const sendMessage = async () => {
+      const query = input.value.trim();
+      if (!query) return;
+
+      if (!hasInteracted) {
+        hideIntro();
+        hasInteracted = true;
+      }
+
+      // User message
+      const userMsg = document.createElement("div");
+      userMsg.className = "message user";
+      userMsg.textContent = query;
+      chatWindow.appendChild(userMsg);
+
+      // Bot placeholder
+      const botMsg = document.createElement("div");
+      botMsg.className = "message bot";
+      botMsg.innerHTML = "⏳ Thinking...";
+      chatWindow.appendChild(botMsg);
+
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+      input.value = "";
+
+      try {
+        const formData = new FormData();
+        formData.append("query", query);
+        formData.append("thread_id", thread_id);
+
+        const res = await fetch("https://shakeel676-drop-bot.hf.space/ask/", {
+          method: "POST",
+          body: formData
+        });
+
+        const data = await res.json();
+        thread_id = data.thread_id;
+        localStorage.setItem("dropbot_thread_id", thread_id);
+        botMsg.innerHTML = marked.parse(data.response || "❌ No response.");
+      } catch (err) {
+        botMsg.innerHTML = "⚠️ Error contacting DropBot.";
+      }
+
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    };
+
+    askBtn.addEventListener("click", sendMessage);
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") sendMessage();
+    });
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        input.value = btn.textContent;
+        sendMessage();
+      });
+    });
+  </script>
+</body>
+</html>
