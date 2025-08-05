@@ -33,42 +33,47 @@
       <p><strong>Dave Bauer</strong><br/>314–394–1500<br/><a href="mailto:Dave@ApwStl.com">Dave@ApwStl.com</a></p>
     </section>
 
-    <!-- SUGGESTED QUESTIONS -->
-    <section id="suggested" class="suggested-questions">
-      <button>City Water</button>
-      <button>Spring Water</button>
-      <button>Chlorine</button>
-      <button>Well Water</button>
-      <button>Purified Water</button>
-      <button>Calcium</button>
-      <button>Hard Water</button>
-      <button>Distilled Water</button>
-      <button>Sulfur</button>
-      <button>Soft Water</button>
-      <button>Alkaline Water</button>
-      <button>Bacteria</button>
-      <button>Corrosion</button>
-      <button>UV Treatment</button>
-      <button>Pesticides</button>
-      <button>Limescale</button>
-      <button>Ion Exchange</button>
-      <button>Heavy Metals</button>
-      <button>Soap Scum</button>
-      <button>Reverse Osmosis</button>
-      <button>E. Coli</button>
-    </section>
+<!-- CHAT SECTION -->
+<section class="chat-wrapper">
+  <div class="chat-label-box">
+    <span class="chat-label">Ask DropBot</span>
+  </div>
 
-    <!-- CHAT WINDOW -->
-    <section class="chat-window" id="chat-window" style="display: none;"></section>
+  <div class="chat-bar">
+    <img src="dropbot-small.png" class="chat-icon" alt="DropBot icon"/>
+    <input type="text" id="user-input" placeholder="Ask Drop Bot..." />
+    <button id="ask-button">Ask DropBot</button>
+  </div>
 
-    <!-- CHAT INPUT -->
-    <section class="chat-input">
-      <div class="chat-bar">
-        <img src="dropbot-small.png" class="chat-icon" alt="DropBot icon"/>
-        <input type="text" id="user-input" placeholder="Ask our AI DropBot any question!" />
-        <button id="ask-button">Ask</button>
-      </div>
-    </section>
+  <!-- SUGGESTED QUESTIONS UNDER INPUT -->
+  <div id="suggested-box" class="suggested-questions">
+    <button>City Water</button>
+    <button>Spring Water</button>
+    <button>Chlorine</button>
+    <button>Well Water</button>
+    <button>Purified Water</button>
+    <button>Calcium</button>
+    <button>Hard Water</button>
+    <button>Distilled Water</button>
+    <button>Sulfur</button>
+    <button>Soft Water</button>
+    <button>Alkaline Water</button>
+    <button>Bacteria</button>
+    <button>Corrosion</button>
+    <button>UV Treatment</button>
+    <button>Pesticides</button>
+    <button>Limescale</button>
+    <button>Ion Exchange</button>
+    <button>Heavy Metals</button>
+    <button>Soap Scum</button>
+    <button>Reverse Osmosis</button>
+    <button>E. Coli</button>
+  </div>
+</section>
+
+<!-- CHAT WINDOW -->
+<section class="chat-window" id="chat-window" style="display: none;"></section>
+
 
     <!-- FOOTER -->
     <footer id="footer">
@@ -91,7 +96,7 @@
     let thread_id = localStorage.getItem("dropbot_thread_id") || "";
 
     const hideIntro = () => {
-      ["main-header", "intro", "contact-info", "suggested", "footer"].forEach(id => {
+      ["main-header", "intro", "contact-info", "suggested-box", "footer"].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.style.display = "none";
       });
