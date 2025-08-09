@@ -4,84 +4,113 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dave Does Water | DropBot</title>
-  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="style1.css"/>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <link rel="icon" type="image/png" href="chatbot-icon.png" />
+  <style>
+    /* Optional: smooth transition when moving input */
+    .chat-wrapper {
+      transition: all 0.4s ease;
+    }
+    .chat-layout-active {
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-layout-active .chat-window {
+      order: 1;
+    }
+    .chat-layout-active .chat-wrapper {
+      order: 2;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
+  <div class="outer-box">
+    
     <!-- HEADER -->
-   <header id="main-header">
-    <div class="header-content">
-        <h1>Welcome to <span class="blue-text">DaveDoesWater.com!</span></h1>
-        <img src="dropbot-small.png" alt="DropBot Logo" class="logo-large" />
-    </div>
+    <header id="main-header">
+      <h1>Welcome to DaveDoesWater.com!</h1>
+      <img src="dropbot-small.png" alt="DropBot Mascot" class="header-logo"/>
     </header>
 
-
+    <!-- CHAT INPUT (initially above) -->
+    <section class="chat-wrapper" id="chat-wrapper">
+      <div class="chat-bar">
+        <img src="dropbot-small.png" class="input-icon" alt="DropBot"/>
+        <input type="text" id="user-input" placeholder="| Ask AI Drop Bot!" />
+      </div>
+      <button id="ask-button" class="send-btn">Ask DropBot</button>
+    </section>
 
     <!-- INTRO TEXT -->
     <section id="intro" class="intro">
-      <p>Water is a solvent, as it moves through the earth it dissolves the minerals it comes in contact with. This is why the water in your community can be very different from the water 10 miles away.</p>
-      <p>Dave Bauer has 15 years experience in the Water conditioning industry. This website is free and designed to help you understand water and the various solutions available to you.</p>
-      <p>All Pro Water is the official St Louis area distributor for Hague Water solutions. We offer 10 years parts and labor warranty and Hague Water comes with its own 25 year manufacturers warranty! Hague Water is proud to be Made in the USA!</p>
-      <p>Call us when you are ready for us to conduct our free in-home water evaluation and solution!</p>
+      <p>
+        <strong>Water</strong> is a solvent, as it flows through the earth it dissolves the minerals it comes in contact with as it flows through the earth. 
+        This is why water in your community can be very different from the water 10 miles away. In the Midwest, limestone is the dominant mineral 
+        so Calcium above 7ppm are unavoidable. When calcium concentrated water flows through copper, corrosion builds up. When hard water is heated 
+        it creates lime scale which is seriously damaging to the appliance. The only science proven solution to stop hard water damage is called Ion Exchange.
+      </p>
+      <p>
+        Dave Bauer is a water expert with over fifteen years experience finding solutions for Industrial, Commercial and Residential applications. 
+        This AI Drop Bot found on this page has a combined 100 years water solution experience installed into its memory to answer any question 
+        about your water and the solutions for your needs. We will come to your house and test your tap water with no obligation to buy. 
+        This website is free to use as often as you need! Below are many common terms that offer simple answers to help you understand your water better. 
+        After you read some or all of the answers available below, you can type your questions above for more in-depth answers or Just Call Dave!
+      </p>
+      <p>
+        All Pro Water is the official St Louis area distributor for Hague Water International. APW offers their own 10 years parts and labor warranty 
+        and Hague Water offers a 25 year manufacturers warranty, best in the business! Hague Water International is proudly made here in the USA, 
+        let us be your water solution for life and call us today to schedule your in-home water evaluation today!
+      </p>
     </section>
 
     <!-- CONTACT INFO -->
     <section id="contact-info" class="contact-info">
-      <p><strong>Dave Bauer</strong><br/>314–394–1500<br/><a href="mailto:Dave@ApwStl.com">Dave@ApwStl.com</a></p>
+      <p><strong>Dave Bauer</strong><br/>
+      <a href="tel:3143941500">314-394-1500</a><br/>
+      <a href="mailto:Dave@ApwStl.com" class="email-btn">Dave@ApwStl.com</a></p>
     </section>
 
-<!-- CHAT SECTION -->
-<section class="chat-wrapper">
-  <div class="chat-label-box">
-    <span class="chat-label">Ask DropBot</span>
-  </div>
+    <!-- SUGGESTED TOPICS -->
+    <section id="suggested-box" class="suggested-questions">
+      <button>City Water</button>
+      <button>Spring Water</button>
+      <button>Chlorine</button>
+      <button>Well Water</button>
+      <button>Purified Water</button>
+      <button>Calcium</button>
+      <button>Hard Water</button>
+      <button>Distilled Water</button>
+      <button>Sulfur</button>
+      <button>Soft Water</button>
+      <button>Alkaline Water</button>
+      <button>Bacteria</button>
+      <button>Corrosion</button>
+      <button>UV Treatment</button>
+      <button>Pesticides</button>
+      <button>Limescale</button>
+      <button>Ion Exchange</button>
+      <button>E. Coli</button>
+      <button>Soap Scum</button>
+      <button>Reverse Osmosis</button>
+      <button>Heavy Metals</button>
+    </section>
 
-  <div class="chat-bar">
-    <img src="dropbot-small.png" class="chat-icon" alt="DropBot icon"/>
-    <input type="text" id="user-input" placeholder="Ask Drop Bot..." />
-    <button id="ask-button">Ask DropBot</button>
-  </div>
-
-  <!-- SUGGESTED QUESTIONS UNDER INPUT -->
-  <div id="suggested-box" class="suggested-questions">
-    <button>City Water</button>
-    <button>Spring Water</button>
-    <button>Chlorine</button>
-    <button>Well Water</button>
-    <button>Purified Water</button>
-    <button>Calcium</button>
-    <button>Hard Water</button>
-    <button>Distilled Water</button>
-    <button>Sulfur</button>
-    <button>Soft Water</button>
-    <button>Alkaline Water</button>
-    <button>Bacteria</button>
-    <button>Corrosion</button>
-    <button>UV Treatment</button>
-    <button>Pesticides</button>
-    <button>Limescale</button>
-    <button>Ion Exchange</button>
-    <button>Heavy Metals</button>
-    <button>Soap Scum</button>
-    <button>Reverse Osmosis</button>
-    <button>E. Coli</button>
-  </div>
-</section>
-
-<!-- CHAT WINDOW -->
-<section class="chat-window" id="chat-window" style="display: none;"></section>
-
+    <!-- CHAT WINDOW -->
+    <div class="chat-container" id="chat-container">
+      <section class="chat-window" id="chat-window" style="display: none;"></section>
+    </div>
 
     <!-- FOOTER -->
     <footer id="footer">
-      <div class="logos">
+      <div class="footer-logos">
         <img src="allpro-logo.jpg" alt="All Pro Water Logo" />
         <img src="hague-logo.jpg" alt="Hague Water Logo" />
       </div>
-      <p>Dave Bauer – 314–394–1500 – <a href="mailto:Dave@ApwStl.com">Dave@ApwStl.com</a></p>
+      <div class="footer-contact">
+        <p>Dave Bauer – 314-394-1500 – <a href="mailto:Dave@ApwStl.com">Dave@ApwStl.com</a></p>
+      </div>
     </footer>
   </div>
 
@@ -91,9 +120,15 @@
     const askBtn = document.getElementById("ask-button");
     const chatWindow = document.getElementById("chat-window");
     const buttons = document.querySelectorAll(".suggested-questions button");
+    const chatWrapper = document.getElementById("chat-wrapper");
+    const chatContainer = document.getElementById("chat-container");
 
     let hasInteracted = false;
     let thread_id = localStorage.getItem("dropbot_thread_id") || "";
+
+    const scrollToBottom = () => {
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    };
 
     const hideIntro = () => {
       ["main-header", "intro", "contact-info", "suggested-box", "footer"].forEach(id => {
@@ -101,6 +136,13 @@
         if (el) el.style.display = "none";
       });
       chatWindow.style.display = "flex";
+      scrollToBottom();
+    };
+
+    const moveInputBelowChat = () => {
+      // Move chat input below chat window
+      chatContainer.appendChild(chatWrapper);
+      document.body.classList.add("chat-layout-active");
     };
 
     const sendMessage = async () => {
@@ -109,22 +151,21 @@
 
       if (!hasInteracted) {
         hideIntro();
+        moveInputBelowChat();
         hasInteracted = true;
       }
 
-      // User message
       const userMsg = document.createElement("div");
       userMsg.className = "message user";
       userMsg.textContent = query;
       chatWindow.appendChild(userMsg);
 
-      // Bot placeholder
       const botMsg = document.createElement("div");
       botMsg.className = "message bot";
       botMsg.innerHTML = "⏳ Thinking...";
       chatWindow.appendChild(botMsg);
 
-      chatWindow.scrollTop = chatWindow.scrollHeight;
+      scrollToBottom();
       input.value = "";
 
       try {
@@ -145,7 +186,7 @@
         botMsg.innerHTML = "⚠️ Error contacting DropBot.";
       }
 
-      chatWindow.scrollTop = chatWindow.scrollHeight;
+      scrollToBottom();
     };
 
     askBtn.addEventListener("click", sendMessage);
