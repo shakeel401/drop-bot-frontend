@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dave Does Water | DropBot</title>
-  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="style1.css"/>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <link rel="icon" type="image/png" href="chatbot-icon.png" />
   <style>
@@ -38,7 +38,7 @@
     <section class="chat-wrapper" id="chat-wrapper">
       <div class="chat-bar">
         <img src="dropbot-small.png" class="input-icon" alt="DropBot"/>
-        <input type="text" id="user-input" placeholder="| Ask AI Drop Bot!" />
+        <input type="text" id="user-input" placeholder="Ask AI Drop Bot!" />
       </div>
       <button id="ask-button" class="send-btn">Ask DropBot</button>
     </section>
@@ -136,11 +136,20 @@
         if (el) el.style.display = "none";
       });
       chatWindow.style.display = "flex";
+
+      // Add welcome message once
+      const welcomeMsg = document.createElement("div");
+      welcomeMsg.className = "message bot";
+      welcomeMsg.innerHTML = "👋 Hi! I’m DropBot — your water knowledge assistant. Ask me anything about water quality, treatment, or solutions!";
+      chatWindow.appendChild(welcomeMsg);
+
       scrollToBottom();
     };
 
+
     const moveInputBelowChat = () => {
       // Move chat input below chat window
+      chatContainer.style.width = "100%";
       chatContainer.appendChild(chatWrapper);
       document.body.classList.add("chat-layout-active");
     };
@@ -203,4 +212,3 @@
   </script>
 </body>
 </html>
-
