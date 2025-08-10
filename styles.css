@@ -58,6 +58,7 @@ body {
 
 .intro p {
   margin-bottom: 15px;
+  text-align: justify;
 }
 
 /* ==================== CONTACT INFO ==================== */
@@ -329,3 +330,4 @@ body {
     max-width: 90%;
   }
 }
+
