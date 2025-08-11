@@ -8,20 +8,32 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <link rel="icon" type="image/png" href="chatbot-icon.png" />
   <style>
-    /* Optional: smooth transition when moving input */
-    .chat-wrapper {
-      transition: all 0.4s ease;
+    /* Default arrow (down) */
+    .suggested-questions button::after {
+      content: "";
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%) rotate(45deg); /* pointing down */
+      border: solid #2e2a85;
+      border-width: 0 2px 2px 0;
+      padding: 3px;
+      transition: transform 0.3s ease, border-color 0.3s ease;
     }
-    .chat-layout-active {
-      display: flex;
-      flex-direction: column;
+
+    /* Hover effect */
+    .suggested-questions button:hover::after {
+      border-color: white;
     }
-    .chat-layout-active .chat-window {
-      order: 1;
+
+    /* Expanded arrow (up) */
+    .question-box.active button::after {
+      transform: translateY(-50%) rotate(-135deg); /* pointing up */
     }
-    .chat-layout-active .chat-wrapper {
-      order: 2;
-      margin-top: 10px;
+
+    /* Ensure relative positioning for buttons */
+    .suggested-questions button {
+      position: relative;
     }
   </style>
 </head>
@@ -71,7 +83,6 @@
       </p>
     </section>
 
-
     <!-- CONTACT INFO -->
     <section id="contact-info" class="contact-info">
       <p><strong>Dave Bauer</strong><br/>
@@ -81,28 +92,30 @@
 
     <!-- SUGGESTED TOPICS -->
     <section id="suggested-box" class="suggested-questions">
-      <button>City Water</button>
-      <button>Spring Water</button>
-      <button>Chlorine</button>
-      <button>Well Water</button>
-      <button>Purified Water</button>
-      <button>Calcium</button>
-      <button>Hard Water</button>
-      <button>Distilled Water</button>
-      <button>Sulfur</button>
-      <button>Soft Water</button>
-      <button>Alkaline Water</button>
-      <button>Bacteria</button>
-      <button>Corrosion</button>
-      <button>UV Treatment</button>
-      <button>Pesticides</button>
-      <button>Limescale</button>
-      <button>Ion Exchange</button>
-      <button>E. Coli</button>
-      <button>Soap Scum</button>
-      <button>Reverse Osmosis</button>
-      <button>Heavy Metals</button>
+      <!-- Wrap each button and answer in .question-box -->
+      <div class="question-box"><button>City Water</button><div class="inline-answer" style="display:none;"></div></div>
+      <div class="question-box"><button>Spring Water</button><div class="inline-answer" style="display:none;"></div></div>
+      <div class="question-box"><button>Chlorine</button><div class="inline-answer" style="display:none;"></div></div>
+      <div class="question-box"><button>Well Water</button><div class="inline-answer" style="display:none;"></div></div>
+      <div class="question-box"><button>Purified Water</button><div class="inline-answer" style="display:none;"></div></div>
+      <div class="question-box"><button>Soft Water</button><div class="inline-answer" style="display:none;"></div></div>
+      <div class="question-box"><button>Hard Water</button><div class="inline-answer" style="display:none;"></div></div>
+      <div class="question-box"><button>Distilled Water</button><div class="inline-answer" style="display:none;"></div></div>
+      <div class="question-box"><button>Sulfur</button><div class="inline-answer" style="display:none;"></div></div>
+      <div class="question-box"><button>Soft Water</button><div class="inline-answer" style="display:none;"></div></div>
+      <div class="question-box"><button>Alkaline Water</button><div class="inline-answer" style="display:none;"></div></div>
+      <div class="question-box"><button>Bacteria</button><div class="inline-answer" style="display:none;"></div></div>
+      <div class="question-box"><button>Corrosion</button><div class="inline-answer" style="display:none;"></div></div>
+      <div class="question-box"><button>UV Treatment</button><div class="inline-answer" style="display:none;"></div></div>
+      <div class="question-box"><button>Pesticides</button><div class="inline-answer" style="display:none;"></div></div>
+      <div class="question-box"><button>Limescale</button><div class="inline-answer" style="display:none;"></div></div>
+      <div class="question-box"><button>Ion Exchange</button><div class="inline-answer" style="display:none;"></div></div>
+      <div class="question-box"><button>E. Coli</button><div class="inline-answer" style="display:none;"></div></div>
+      <div class="question-box"><button>Soap Scum</button><div class="inline-answer" style="display:none;"></div></div>
+      <div class="question-box"><button>Reverse Osmosis</button><div class="inline-answer" style="display:none;"></div></div>
+      <div class="question-box"><button>Heavy Metals</button><div class="inline-answer" style="display:none;"></div></div>
     </section>
+
 
     <!-- CHAT WINDOW -->
     <div class="chat-container" id="chat-container">
@@ -127,12 +140,15 @@
     </footer>
   </div>
 
+  <!-- Load pre-written answers from external file -->
+  <script src="answers.js"></script>
+
   <!-- SCRIPT -->
   <script>
     const input = document.getElementById("user-input");
     const askBtn = document.getElementById("ask-button");
     const chatWindow = document.getElementById("chat-window");
-    const buttons = document.querySelectorAll(".suggested-questions button");
+    const questionBoxes = document.querySelectorAll(".question-box");
     const chatWrapper = document.getElementById("chat-wrapper");
     const chatContainer = document.getElementById("chat-container");
 
@@ -150,7 +166,6 @@
       });
       chatWindow.style.display = "flex";
 
-      // Add welcome message once
       const welcomeMsg = document.createElement("div");
       welcomeMsg.className = "message bot";
       welcomeMsg.innerHTML = "👋 Hi! I’m DropBot — your water knowledge assistant. Ask me anything about water quality, treatment, or solutions!";
@@ -159,9 +174,7 @@
       scrollToBottom();
     };
 
-
     const moveInputBelowChat = () => {
-      // Move chat input below chat window
       chatContainer.style.width = "100%";
       chatContainer.appendChild(chatWrapper);
       document.body.classList.add("chat-layout-active");
@@ -216,16 +229,34 @@
       if (e.key === "Enter") sendMessage();
     });
 
-    buttons.forEach(btn => {
+    // Updated suggested question click logic with arrow toggle
+    questionBoxes.forEach(box => {
+      const btn = box.querySelector("button");
+      const answerDiv = box.querySelector(".inline-answer");
+
       btn.addEventListener("click", () => {
-        input.value = btn.textContent;
-        sendMessage();
+        const isOpen = box.classList.contains("active");
+
+        // Close all boxes first
+        questionBoxes.forEach(otherBox => {
+          otherBox.classList.remove("active");
+          const otherAnswer = otherBox.querySelector(".inline-answer");
+          otherAnswer.style.display = "none";
+          otherAnswer.textContent = "";
+        });
+
+        // If it was not open before, open it
+        if (!isOpen) {
+          const topic = btn.textContent.trim();
+          const answer = answers[topic] || "Sorry, no answer available for this topic yet.";
+
+          answerDiv.textContent = answer;
+          answerDiv.style.display = "block";
+          box.classList.add("active");
+          answerDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
       });
     });
   </script>
 </body>
 </html>
-
-
-
-
