@@ -294,16 +294,23 @@ body {
   text-align: center;
 }
 
-.footer-logos {
+.footer-row {
   display: flex;
   justify-content: center;
-  gap: 40px;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
+  align-items: center;
+  gap: 50px;
+  margin-bottom: 15px;
+  flex-wrap: nowrap; /* Prevent wrapping to new line */
 }
 
-.footer-logos img {
-  height: 50px;
+.footer-logo {
+  height: 90px; /* Larger logos */
+  max-width: 100%;
+}
+
+.footer-photo {
+  max-width: 90px; /* Smaller photo */
+  border-radius: 8px;
 }
 
 .footer-contact p {
@@ -358,7 +365,13 @@ body {
     padding: 10px 14px;
   }
 }
+.footer-logo {
+    height: 60px;
+  }
 
+  .footer-photo {
+    max-width: 70px;
+  }
 /* Small phones (≤ 480px) */
 @media (max-width: 480px) {
   #main-header h1 {
@@ -382,8 +395,15 @@ body {
     padding: 8px;
     width: 100%;
   }
-  .footer-logos img {
+  .footer-row{
+    gap: 17px;
+  }
+  .footer-logo {
     height: 40px;
+  }
+
+  .footer-photo {
+    max-width: 50px;
   }
   
    .chat-window {
