@@ -2,6 +2,7 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
+  width: 100%;
   padding: 0;
   color: #231f20;
   background-color: white;
@@ -81,6 +82,74 @@ body {
 }
 
 /* ==================== SUGGESTED TOPICS GRID ==================== */
+.chat-wrapper {
+  transition: all 0.4s ease;
+}
+.chat-layout-active {
+  display: flex;
+  flex-direction: column;
+}
+.chat-layout-active .chat-window {
+  order: 1;
+}
+.chat-layout-active .chat-wrapper {
+  order: 2;
+  margin-top: 10px;
+}
+
+/* Style for each question container */
+.question-box {
+  border: 2px solid #2e2a85;
+  color: #2e2a85;
+  text-align: left;
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: none;
+  position: relative;
+  cursor: pointer;
+}
+
+/* On hover over question box, change background and button text color */
+.question-box:hover {
+  background-color: #2e2a85; /* blue */
+}
+
+.question-box:hover button {
+  color: white;
+}
+
+/* Style buttons to fill the box width and keep consistent */
+.question-box button {
+  width: 100%;
+  font-size: 14px;
+  padding: 4px 6px;
+  cursor: pointer;
+  background-color: transparent; /* transparent so background color is from box */
+  color: #2e2a85; 
+  border: none;
+  text-align: left;
+  transition: color 0.3s ease;
+
+}
+/* Remove button hover background because box hover covers it */
+.question-box button:hover {
+  background-color: transparent;
+  color: white;
+}
+
+/* Style for the inline answer inside the same box */
+.inline-answer {
+  margin-top: 0.75em;
+  font-size: 1em;
+  color: #444;
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 4px;
+  border-top: 1px solid #ccc;
+  white-space: pre-line; /* preserve line breaks */
+}
+
 .suggested-questions {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -88,28 +157,18 @@ body {
   margin-top: 20px;
 }
 
-.suggested-questions button {
-  background: none;
-  border: 2px solid #2e2a85;
-  color: #2e2a85;
-  padding: 8px 12px;
-  text-align: left;
-  font-size: 14px;
-  cursor: pointer;
-  position: relative;
-}
 
 .suggested-questions button::after {
   content: "";
   position: absolute;
   right: 10px;
   top: 50%;
-  transform: translateY(-50%) rotate(45deg);
+  transform: translateY(-50%) rotate(45deg); /* pointing down */
   border: solid #2e2a85;
   border-width: 0 2px 2px 0;
   padding: 3px;
+  transition: transform 0.3s ease, border-color 0.3s ease;
 }
-
 .suggested-questions button:hover {
   background-color: #2e2a85;
   color: white;
@@ -119,6 +178,9 @@ body {
   border-color: white;
 }
 
+.question-box.active button::after {
+  transform: translateY(-50%) rotate(-135deg); /* pointing up */
+}
 /* ==================== CHAT AREA ==================== */
 /* Fixed header-style chat wrapper */
 .chat-wrapper {
@@ -178,7 +240,7 @@ body {
 /* Chat Window Styles */
 .chat-container{
   margin: 5px;
-  width: auto;
+  width: 100%;
   border: 1px solid #f7f7f8;
   border-radius: 6px;
 }
@@ -285,6 +347,7 @@ body {
   .send-btn {
     width: 100%;
   }
+
   .chat-window {
     height: 70vh;
     padding: 15px;
@@ -322,6 +385,7 @@ body {
   .footer-logos img {
     height: 40px;
   }
+  
    .chat-window {
     height: 65vh;
   }
@@ -330,4 +394,3 @@ body {
     max-width: 90%;
   }
 }
-
